@@ -300,9 +300,9 @@
   .hiw-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(245,200,66,.18),rgba(34,255,184,.10));border:1px solid var(--border);display:grid;place-items:center;font-size:1.5rem;}
   .hiw-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);}
   .hiw-desc{font-size:.92rem;color:var(--muted);line-height:1.75;}
-  .hiw-progress{height:2px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:8px;max-width:1180px;margin-left:auto;margin-right:auto;}
-  .hiw-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--mint));border-radius:2px;}
-  .hiw-hint{display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--muted);margin-top:16px;letter-spacing:.06em;text-transform:uppercase;}
+  .hiw-progress{height:2px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:28px;max-width:1180px;margin-left:auto;margin-right:auto;}
+  .hiw-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--mint));border-radius:2px;transition:width .05s linear;}
+  .hiw-hint{display:flex;align-items:center;gap:10px;font-size:.75rem;color:var(--subtle);margin-top:14px;margin-left:auto;margin-right:auto;max-width:1180px;letter-spacing:.08em;text-transform:uppercase;padding:0 24px;}
 
   /* ───────── testimonials ───────── */
   .testimonial-stage{position:relative;perspective:1400px;height:340px;display:flex;align-items:center;justify-content:center;}
@@ -452,6 +452,13 @@
   .reveal-delay-2{transition-delay:.2s;}
   .reveal-delay-3{transition-delay:.3s;}
 
+  /* ───────── no-webgl fallback (reduced-motion / low-end) ───────── */
+  .no-webgl body{
+    background:radial-gradient(ellipse 80% 60% at 60% 20%, rgba(245,200,66,.07) 0%, transparent 65%),
+               radial-gradient(ellipse 50% 40% at 20% 80%, rgba(34,255,184,.05) 0%, transparent 60%),
+               var(--black);
+  }
+
   /* ───────── responsive ───────── */
   @media (max-width:980px){
     .work-grid{grid-template-columns:1fr;}
@@ -483,6 +490,10 @@
     .testimonial-card{padding:30px;}
     .faq-question{padding:20px;font-size:.95rem;}
     .faq-answer-inner{padding:0 20px 20px;}
+    /* horizontal scroll becomes touch-scroll on mobile */
+    .hiw-pin{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .hiw-track{transform:none!important;padding-bottom:8px;}
+    .hiw-progress{display:none;}
   }
 </style>
 </head>
@@ -748,7 +759,7 @@
     </div>
     <div class="container">
       <div class="hiw-progress"><div class="hiw-progress-fill" id="hiwFill"></div></div>
-      <div class="hiw-hint">Scroll to explore the journey</div>
+      <div class="hiw-hint"><svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Scroll to explore the journey</div>
     </div>
   </section>
 
@@ -1315,11 +1326,14 @@ if(yr) yr.textContent = new Date().getFullYear();
   var section = document.getElementById('how-it-works');
   if(!track || !section) return;
 
+  // On mobile/touch screens, let native overflow-x scroll handle it
+  if(window.innerWidth < 640) return;
+
   function getScrollAmount(){
     return track.scrollWidth - section.querySelector('.container').offsetWidth;
   }
 
-  var tween = gsap.to(track, {
+  gsap.to(track, {
     x: function(){ return -getScrollAmount(); },
     ease:'none',
     scrollTrigger:{
