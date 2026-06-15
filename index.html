@@ -285,7 +285,73 @@
   .process-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:600;color:var(--white);margin-bottom:12px;}
   .process-desc{font-size:.92rem;color:var(--muted);line-height:1.75;max-width:54ch;}
 
-  /* ───────── stats / live counters ───────── */
+  /* ───────── how it works (horizontal pinned scroll) ───────── */
+  .hiw-pin{position:relative;overflow:hidden;}
+  .hiw-track{display:flex;gap:28px;width:max-content;will-change:transform;padding-right:24px;}
+  .hiw-card{
+    width:min(420px,82vw);flex-shrink:0;
+    background:var(--glass);border:1px solid var(--border);
+    backdrop-filter:blur(18px) saturate(140%);
+    border-radius:var(--r-lg);padding:40px;
+    display:flex;flex-direction:column;gap:18px;
+    position:relative;overflow:hidden;
+  }
+  .hiw-num{font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.25;line-height:1;}
+  .hiw-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(245,200,66,.18),rgba(34,255,184,.10));border:1px solid var(--border);display:grid;place-items:center;font-size:1.5rem;}
+  .hiw-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);}
+  .hiw-desc{font-size:.92rem;color:var(--muted);line-height:1.75;}
+  .hiw-progress{height:2px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:8px;max-width:1180px;margin-left:auto;margin-right:auto;}
+  .hiw-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--mint));border-radius:2px;}
+  .hiw-hint{display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--muted);margin-top:16px;letter-spacing:.06em;text-transform:uppercase;}
+
+  /* ───────── testimonials ───────── */
+  .testimonial-stage{position:relative;perspective:1400px;height:340px;display:flex;align-items:center;justify-content:center;}
+  .testimonial-card{
+    position:absolute;width:min(560px,88vw);
+    background:var(--glass);border:1px solid var(--border);
+    backdrop-filter:blur(20px) saturate(140%);
+    border-radius:var(--r-lg);padding:44px;
+    display:flex;flex-direction:column;gap:20px;
+    transition:transform .7s var(--ease),opacity .7s var(--ease),filter .7s var(--ease);
+  }
+  .testimonial-quote{font-size:1.05rem;line-height:1.8;color:var(--ink);font-family:'Syne',sans-serif;font-weight:500;}
+  .testimonial-person{display:flex;align-items:center;gap:14px;}
+  .testimonial-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--mint));display:grid;place-items:center;font-family:'Syne',sans-serif;font-weight:700;color:var(--black);font-size:.95rem;flex-shrink:0;}
+  .testimonial-name{font-size:.92rem;font-weight:600;color:var(--white);}
+  .testimonial-role{font-size:.78rem;color:var(--muted);}
+  .testimonial-stars{color:var(--gold);font-size:.85rem;letter-spacing:.15em;}
+
+  .testimonial-dots{display:flex;justify-content:center;gap:10px;margin-top:36px;}
+  .testimonial-dot{width:8px;height:8px;border-radius:50%;background:var(--border);border:none;transition:background .3s,transform .3s;}
+  .testimonial-dot.active{background:var(--gold);transform:scale(1.3);}
+
+  /* ───────── FAQ ───────── */
+  .faq-list{display:flex;flex-direction:column;gap:14px;}
+  .faq-item{
+    background:var(--glass);border:1px solid var(--border);
+    backdrop-filter:blur(16px) saturate(140%);
+    border-radius:var(--r-md);overflow:hidden;
+    transition:border-color .3s,background .3s;
+  }
+  .faq-item.open{border-color:rgba(245,200,66,.3);background:rgba(245,200,66,.04);}
+  .faq-question{
+    width:100%;text-align:left;background:none;border:none;color:var(--white);
+    font-family:'Syne',sans-serif;font-size:1.02rem;font-weight:600;
+    padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .faq-icon{
+    flex-shrink:0;width:28px;height:28px;border-radius:50%;
+    border:1px solid var(--border);display:grid;place-items:center;
+    position:relative;transition:transform .4s var(--ease),border-color .3s;
+  }
+  .faq-item.open .faq-icon{transform:rotate(45deg);border-color:var(--gold);}
+  .faq-icon::before,.faq-icon::after{content:'';position:absolute;background:var(--white);transition:background .3s;}
+  .faq-icon::before{width:12px;height:1.5px;}
+  .faq-icon::after{width:1.5px;height:12px;}
+  .faq-item.open .faq-icon::before,.faq-item.open .faq-icon::after{background:var(--gold);}
+  .faq-answer{height:0;overflow:hidden;transition:height .4s var(--ease);}
+  .faq-answer-inner{padding:0 28px 24px;font-size:.9rem;color:var(--muted);line-height:1.75;max-width:60ch;}
+
   .stats-section{position:relative;}
   .stats-panel{
     background:var(--glass);border:1px solid var(--border);
@@ -396,6 +462,7 @@
     .cta-section{padding:48px 36px;}
     .stats-panel{grid-template-columns:1fr 1fr;}
     .stats-cell:nth-child(3){border-left:none;padding-left:0;}
+    .testimonial-stage{height:400px;}
   }
   @media (max-width:640px){
     .hero-stats{flex-wrap:wrap;}
@@ -411,6 +478,11 @@
     .stats-panel{grid-template-columns:1fr 1fr;padding:32px 24px;gap:28px;}
     .stats-cell:nth-child(odd){border-left:none;padding-left:0;}
     .stats-cell:nth-child(even){border-left:1px solid var(--border);padding-left:18px;}
+    .hiw-card{padding:28px;}
+    .testimonial-stage{height:460px;}
+    .testimonial-card{padding:30px;}
+    .faq-question{padding:20px;font-size:.95rem;}
+    .faq-answer-inner{padding:0 20px 20px;}
   }
 </style>
 </head>
@@ -636,7 +708,50 @@
     </div>
   </section>
 
-  <!-- Live stats panel -->
+  <!-- How It Works — horizontal pinned scroll -->
+  <section class="hiw-pin" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header-left reveal">
+          <div class="label">Your Journey</div>
+          <h2 class="section-title">From idea to<br>finished product</h2>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="overflow:visible;">
+      <div class="hiw-track" id="hiwTrack">
+        <article class="hiw-card">
+          <div class="hiw-num">01</div>
+          <div class="hiw-icon" aria-hidden="true">💬</div>
+          <h3 class="hiw-title">Share Your Brief</h3>
+          <p class="hiw-desc">Tell us what you're building — a brand, a video, a soundtrack, a website. The more detail, the better the match.</p>
+        </article>
+        <article class="hiw-card">
+          <div class="hiw-num">02</div>
+          <div class="hiw-icon" aria-hidden="true">🔍</div>
+          <h3 class="hiw-title">Get Matched</h3>
+          <p class="hiw-desc">We pair you with a vetted specialist from our network whose skills and style fit your project.</p>
+        </article>
+        <article class="hiw-card">
+          <div class="hiw-num">03</div>
+          <div class="hiw-icon" aria-hidden="true">🛠️</div>
+          <h3 class="hiw-title">Build &amp; Refine</h3>
+          <p class="hiw-desc">We manage every stage — drafts, feedback, revisions — keeping quality high and communication clear.</p>
+        </article>
+        <article class="hiw-card">
+          <div class="hiw-num">04</div>
+          <div class="hiw-icon" aria-hidden="true">🚀</div>
+          <h3 class="hiw-title">Launch &amp; Grow</h3>
+          <p class="hiw-desc">Receive your finished work, ready to ship — with ongoing support if you need to iterate further.</p>
+        </article>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hiw-progress"><div class="hiw-progress-fill" id="hiwFill"></div></div>
+      <div class="hiw-hint">Scroll to explore the journey</div>
+    </div>
+  </section>
+
   <section class="stats-section tight">
     <div class="container">
       <div class="stats-panel reveal">
@@ -655,6 +770,129 @@
         <div class="stats-cell">
           <div class="stats-num"><span data-count="24">0</span><span class="unit">h</span></div>
           <div class="stats-label">Avg. response window</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header-left reveal">
+          <div class="label">What Clients Say</div>
+          <h2 class="section-title">Trusted by founders<br>and teams</h2>
+        </div>
+      </div>
+      <div class="testimonial-stage" id="testimonialStage" role="region" aria-label="Client testimonials" aria-roledescription="carousel">
+        <article class="testimonial-card" data-index="0" role="group" aria-roledescription="slide" aria-label="1 of 4">
+          <div class="testimonial-stars" aria-hidden="true">★★★★★</div>
+          <p class="testimonial-quote">The team understood our brand instantly and delivered a visual identity that finally felt like us. Communication was clear from brief to handoff.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar" aria-hidden="true">AK</div>
+            <div>
+              <div class="testimonial-name">Ama Kufuor</div>
+              <div class="testimonial-role">Founder, Kufuor &amp; Co.</div>
+            </div>
+          </div>
+        </article>
+        <article class="testimonial-card" data-index="1" role="group" aria-roledescription="slide" aria-label="2 of 4">
+          <div class="testimonial-stars" aria-hidden="true">★★★★★</div>
+          <p class="testimonial-quote">Our launch video came together faster than we expected, and the editing quality was on par with agencies charging triple. We'll be back for the next campaign.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar" aria-hidden="true">DT</div>
+            <div>
+              <div class="testimonial-name">David Tetteh</div>
+              <div class="testimonial-role">Marketing Lead, Tetteh Group</div>
+            </div>
+          </div>
+        </article>
+        <article class="testimonial-card" data-index="2" role="group" aria-roledescription="slide" aria-label="3 of 4">
+          <div class="testimonial-stars" aria-hidden="true">★★★★★</div>
+          <p class="testimonial-quote">Working with their developer felt like having an in-house engineer. The site was fast, accessible, and exactly to spec — revisions were quick and painless.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar" aria-hidden="true">NS</div>
+            <div>
+              <div class="testimonial-name">Nana Serwaa</div>
+              <div class="testimonial-role">Operations Manager, Serwaa Ventures</div>
+            </div>
+          </div>
+        </article>
+        <article class="testimonial-card" data-index="3" role="group" aria-roledescription="slide" aria-label="4 of 4">
+          <div class="testimonial-stars" aria-hidden="true">★★★★★</div>
+          <p class="testimonial-quote">The sound design they produced for our podcast intro gave the show an instantly more professional feel. Listeners noticed within the first week.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar" aria-hidden="true">EO</div>
+            <div>
+              <div class="testimonial-name">Edem Owusu</div>
+              <div class="testimonial-role">Host, The Weekly Brief</div>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Choose testimonial">
+        <button class="testimonial-dot active" role="tab" aria-selected="true" aria-label="Testimonial 1" data-index="0"></button>
+        <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Testimonial 2" data-index="1"></button>
+        <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Testimonial 3" data-index="2"></button>
+        <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Testimonial 4" data-index="3"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header-left reveal">
+          <div class="label">FAQ</div>
+          <h2 class="section-title">Questions,<br>answered</h2>
+        </div>
+      </div>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>How quickly can a project start?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Most briefs are reviewed and matched with a creator within one business day. Once you approve the match, work typically begins right away — exact timelines depend on project scope.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" aria-expanded="false">
+            <span>What if I'm not happy with the first draft?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Revisions are part of the process. We manage feedback rounds directly with the creator until the work matches your brief — clear communication keeps cycles short and focused.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I hire for more than one discipline at once?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes — many clients combine services, for example brand design with web development, or video with audio production. Share the full brief and we'll coordinate the right team.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" aria-expanded="false">
+            <span>How do payments and pricing work?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Pricing depends on project scope, complexity, and timeline. After your brief is reviewed, we'll send a clear quote before any work begins — no surprise costs.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" aria-expanded="false">
+            <span>Do you only work with clients in Ghana?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No — while we're based in Ghana, our network and workflow are fully remote, so we work with clients anywhere. WhatsApp and email keep communication simple across time zones.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -988,6 +1226,115 @@ if(yr) yr.textContent = new Date().getFullYear();
     form.reset();
   });
 })();
+
+// ── Testimonial carousel ──
+(function(){
+  var cards = document.querySelectorAll('#testimonialStage .testimonial-card');
+  var dots = document.querySelectorAll('#testimonialDots .testimonial-dot');
+  if(!cards.length) return;
+  var current = 0;
+  var AUTO_MS = 6000;
+  var timer;
+
+  function layout(){
+    cards.forEach(function(card, i){
+      var diff = i - current;
+      // normalize to shortest direction across N cards
+      var n = cards.length;
+      if(diff > n/2) diff -= n;
+      if(diff < -n/2) diff += n;
+
+      if(diff === 0){
+        gsap.to(card, {x:0, z:0, rotateY:0, scale:1, opacity:1, filter:'blur(0px)', zIndex:3, duration:0.7, ease:'power3.out'});
+      } else if(Math.abs(diff) === 1){
+        gsap.to(card, {x: diff*70 + '%', z:-120, rotateY: diff*-22, scale:0.85, opacity:0.35, filter:'blur(2px)', zIndex:2, duration:0.7, ease:'power3.out'});
+      } else {
+        gsap.to(card, {x: (diff>0?1:-1)*140 + '%', z:-240, rotateY: (diff>0?1:-1)*-30, scale:0.7, opacity:0, filter:'blur(4px)', zIndex:1, duration:0.7, ease:'power3.out'});
+      }
+    });
+    dots.forEach(function(d,i){
+      d.classList.toggle('active', i===current);
+      d.setAttribute('aria-selected', i===current ? 'true':'false');
+    });
+  }
+
+  function go(i){
+    current = (i + cards.length) % cards.length;
+    layout();
+  }
+
+  function startAuto(){
+    clearInterval(timer);
+    timer = setInterval(function(){ go(current+1); }, AUTO_MS);
+  }
+
+  dots.forEach(function(dot,i){
+    dot.addEventListener('click', function(){ go(i); startAuto(); });
+  });
+
+  // init styles
+  gsap.set(cards, {position:'absolute', transformPerspective:1200, transformStyle:'preserve-3d'});
+  layout();
+  startAuto();
+})();
+
+// ── FAQ accordion ──
+(function(){
+  var items = document.querySelectorAll('#faqList .faq-item');
+  items.forEach(function(item){
+    var btn = item.querySelector('.faq-question');
+    var answer = item.querySelector('.faq-answer');
+    var inner = item.querySelector('.faq-answer-inner');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      // close others
+      items.forEach(function(other){
+        if(other !== item && other.classList.contains('open')){
+          other.classList.remove('open');
+          other.querySelector('.faq-question').setAttribute('aria-expanded','false');
+          other.querySelector('.faq-answer').style.height = '0px';
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        answer.style.height = '0px';
+      } else {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+        answer.style.height = inner.offsetHeight + 'px';
+      }
+    });
+  });
+})();
+
+// ── How It Works — horizontal pinned scroll ──
+(function(){
+  var track = document.getElementById('hiwTrack');
+  var fill = document.getElementById('hiwFill');
+  var section = document.getElementById('how-it-works');
+  if(!track || !section) return;
+
+  function getScrollAmount(){
+    return track.scrollWidth - section.querySelector('.container').offsetWidth;
+  }
+
+  var tween = gsap.to(track, {
+    x: function(){ return -getScrollAmount(); },
+    ease:'none',
+    scrollTrigger:{
+      trigger: section,
+      start:'top top',
+      end: function(){ return '+=' + (getScrollAmount() + window.innerHeight*0.3); },
+      scrub:true,
+      pin:true,
+      invalidateOnRefresh:true,
+      onUpdate: function(self){
+        if(fill) fill.style.width = (self.progress*100) + '%';
+      }
+    }
+  });
+})();
 </script>
 
 <script type="module">
@@ -1000,6 +1347,40 @@ import * as THREE from 'three';
   var canvas = document.getElementById('webgl-bg');
   if(!canvas) return;
 
+  // ── Capability check: skip heavy WebGL scene for reduced-motion or low-end devices ──
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || window.innerWidth < 480;
+
+  if(prefersReducedMotion || lowEnd){
+    canvas.style.display = 'none';
+    document.body.classList.add('no-webgl');
+    return; // CSS gradient fallback (see .no-webgl rule) takes over
+  }
+
+  // ── Lazy init: only start the scene once the hero is visible ──
+  var hero = document.getElementById('home');
+  var started = false;
+
+  function init(){
+    if(started) return;
+    started = true;
+    startScene();
+  }
+
+  if(hero && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ init(); io.disconnect(); }
+      });
+    }, {threshold: 0.01});
+    io.observe(hero);
+    // Fallback in case observer never fires (e.g. hero already fully scrolled past on load)
+    setTimeout(init, 1200);
+  } else {
+    init();
+  }
+
+  function startScene(){
   var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -1159,6 +1540,7 @@ import * as THREE from 'three';
     requestAnimationFrame(animate);
   }
   animate();
+  } // end startScene
 })();
 </script>
 </body>
