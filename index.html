@@ -1363,7 +1363,8 @@ import * as THREE from 'three';
 
   // ── Capability check: skip heavy WebGL scene for reduced-motion or low-end devices ──
   var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var lowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || window.innerWidth < 480;
+  // Only treat genuinely small/low-power devices as low-end — most real phones/laptops report 4-8 cores
+  var lowEnd = window.innerWidth < 480;
 
   if(prefersReducedMotion || lowEnd){
     canvas.style.display = 'none';
@@ -1475,7 +1476,8 @@ import * as THREE from 'three';
   var coreSphere = new THREE.Mesh(coreSphereGeo, coreSphereMat);
   coreGroup.add(coreSphere);
 
-  coreGroup.position.set(2.6, 0.4, -3);
+  coreGroup.position.set(4.6, -0.2, -5);
+  coreGroup.scale.setScalar(0.82);
   scene.add(coreGroup);
 
   // small orbiting nodes around the core (representing the 5 disciplines)
